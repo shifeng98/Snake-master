@@ -12,6 +12,9 @@ public class ThreadsController extends Thread {
 	 ArrayList<Tuple> positions = new ArrayList<Tuple>();
 	 Tuple foodPosition;
 	 
+	 ArrayList<Tuple> positions2 = new ArrayList<Tuple>();
+	 Tuple foodPosition2;
+	 
 	 //Constructor of ControlleurThread 
 	 ThreadsController(Tuple positionDepart){
 		//Get all the threads
@@ -23,9 +26,15 @@ public class ThreadsController extends Thread {
 		//!!! Pointer !!!!
 		Tuple headPos = new Tuple(headSnakePos.getX(),headSnakePos.getY());
 		positions.add(headPos);
+		 
+		Tuple headPos2 = new Tuple(headSnakePos.getX(),headSnakePos.getY());
+		positions2.add(headPos2);
 		
 		foodPosition= new Tuple(Window.height-1,Window.width-1);
 		spawnFood(foodPosition);
+		
+		foodPosition2= new Tuple(Window.height-1,Window.width-1);
+		spawnFood2(foodPosition2);
 
 	 }
 	 
@@ -67,6 +76,15 @@ public class ThreadsController extends Thread {
 
 			 spawnFood(foodPosition);	
 		 }
+		 
+		 boolean eatingFood2 = posCritique.getX()==foodPosition2.y && posCritique.getY()==foodPosition2.x;
+		 if(eatingFood2){
+			 System.out.println("Yummy!");
+			 sizeSnake=sizeSnake+1;
+			 	foodPosition2 = getValAleaNotInSnake();
+
+			 spawnFood(foodPosition2);	
+		 }
 	 }
 	 
 	 //Stops The Game
@@ -80,6 +98,10 @@ public class ThreadsController extends Thread {
 	 //Put food in a position and displays it
 	 private void spawnFood(Tuple foodPositionIn){
 		 	Squares.get(foodPositionIn.x).get(foodPositionIn.y).lightMeUp(1);
+	 }
+	 
+	 private void spawnFood2(Tuple foodPositionIn2){
+		Squares.get(foodPositionIn2.x).get(foodPositionIn2.y).lightMeUp(1);
 	 }
 	 
 	 //return a position not occupied by the snake
